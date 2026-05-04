@@ -455,7 +455,7 @@
         cCtx.fillStyle = '#00ffd5'; cCtx.fillText('MASTERY', cw / 2, 490);
         cCtx.fillStyle = '#aaaaaa'; cCtx.font = '24px Courier New'; cCtx.fillText('This officially verifies that :', cw / 2, 580);
         cCtx.fillStyle = '#ff00c8'; cCtx.font = 'bold 55px Courier New'; cCtx.fillText(playerName.toUpperCase(), cw / 2, 650);
-        cCtx.fillStyle = '#ffffff'; cCtx.font = '30px Courier New'; cCtx.fillText(`Achieved LEVEL: ${maxLevelReached} / 10`, cw / 2, 730);
+        cCtx.fillStyle = '#ffffff'; cCtx.font = '30px Courier New'; cCtx.fillText(`Achieved LEVEL: ${maxLevelReached} / 11`, cw / 2, 730);
         cCtx.fillText(`Final Score: ${score}`, cw / 2, 780);
         cCtx.fillStyle = '#aaaaaa'; cCtx.font = 'italic 18px Courier New';
         cCtx.fillText("Recognized by the 10kSquad NFT platform on the Monad Ecosystem.", cw / 2, 880);
