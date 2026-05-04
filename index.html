@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>10kSquad: Aviary</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+</head>
+<body>
+    <div class="ui-container">
+        <header>
+            <h1>The 10k Squad <span>Aviary</span></h1>
+            <p>Score: <span id="scoreVal">0</span> | Lvl: <span id="levelVal">0</span></p>
+        </header>
+    </div>
+
+    <div id="deadline"></div>
+
+    <div id="cssCountdown" class="overlay hidden">
+        <h1 id="countdownText">3</h1>
+        <p>Danger Zone</p>
+    </div>
+
+    <div id="homeScreenUI" class="overlay android-app-view">
+        <div class="app-content">
+            <div class="app-header">
+                <h1 style="color: #ff00c8; font-size: 2.5rem; margin-bottom: 0px; text-shadow: 0 0 15px rgba(255, 0, 200, 0.7);">10kSquad</h1>
+                <h2 style="color: #ffadd6; font-size: 1.5rem; margin-top: -5px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 173, 214, 0.6);">AVIARY</h2>
+            </div>
+            
+            <div class="mascot-container">
+                <img src="9.jpg" alt="Level 9 Bird Mascot" class="home-mascot" onerror="this.style.display='none'">
+            </div>
+            
+            <p class="app-subtitle-chip">Drop, Merge, & Collect 'Em All! 🦜</p>
+            
+            <div class="how-to-play-app">
+                <div class="instruction-card">
+                    <span class="icon">👆</span>
+                    <p><strong>TAP</strong> to drop</p>
+                </div>
+                <div class="instruction-card">
+                    <span class="icon">🔄</span>
+                    <p><strong>MERGE</strong> identicals</p>
+                </div>
+                <div class="instruction-card">
+                    <span class="icon">📏</span>
+                    <p><strong>STAY</strong> below line</p>
+                </div>
+                <div class="instruction-card">
+                    <span class="icon">🏆</span>
+                    <p><strong>REACH</strong> Lvl. 11</p>
+                </div>
+            </div>
+            
+            <div class="app-bottom-bar">
+                <button id="startGameBtn" class="glow-on-hover start-pulse play-btn-app">🎮 PLAY NOW</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="nameInputUI" class="overlay hidden">
+        <div class="glass-box">
+            <h2 style="color: #ff00c8; font-size: 1.8rem; margin-bottom: 5px;">Game Over</h2>
+            <p style="margin-bottom: 20px; color: #aaa; font-size: 0.85rem;">Enter your Name or X Handle to generate your official record.</p>
+            <input type="text" id="playerNameInput" placeholder="Name or @Handle" autocomplete="off" maxlength="20">
+            <button id="generateCertBtn" class="glow-on-hover">GENERATE CERTIFICATE</button>
+        </div>
+    </div>
+
+    <div id="certificateUI" class="overlay hidden">
+        <div class="glass-box cert-box">
+            <div class="cert-wrapper">
+                <canvas id="certCanvas" width="800" height="1000"></canvas>
+            </div>
+
+            <div class="button-group horizontal">
+                <button id="downloadBtn" class="glow-on-hover secondary">💾 Download</button>
+                <button id="shareBtn" class="glow-on-hover x-btn">𝕏 Share</button>
+            </div>
+            <button id="restartBtn" class="glow-on-hover" style="margin-top: 15px; border-color: #ff4500;">PLAY AGAIN</button>
+        </div>
+    </div>
+    
+    <canvas id="aviaryCanvas"></canvas>
+
+    <audio id="gameBGM" loop preload="auto">
+        <source src="History Of Time" type="audio/mpeg">
+    </audio>
+    
+    <button id="muteToggleBtn" class="audio-btn glow-on-hover" style="display: none;">🔊</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const bgm = document.getElementById('gameBGM');
+            const muteBtn = document.getElementById('muteToggleBtn');
+            const playBtn = document.getElementById('startGameBtn');
+            
+            let isMuted = false;
+            let hasStarted = false;
+
+            bgm.volume = 0.4; 
+
+            // Toggle Audio State
+            muteBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                isMuted = !isMuted;
+                bgm.muted = isMuted;
+                muteBtn.innerHTML = isMuted ? '🔇' : '🔊';
+                muteBtn.classList.toggle('muted-state', isMuted);
+                
+                if (!hasStarted && !isMuted) {
+                    bgm.play().catch(err => console.log("Waiting for interaction..."));
+                    hasStarted = true;
+                }
+            });
+
+            // Browser Autoplay Policy & Visibility Toggle
+            if (playBtn) {
+                playBtn.addEventListener('click', () => {
+                    
+                    // ADDED: Reveal the mute button only when the game starts
+                    muteBtn.style.display = 'flex'; 
+
+                    if (!hasStarted && !isMuted) {
+                        bgm.play().catch(err => console.log("Audio blocked by browser."));
+                        hasStarted = true;
+                    }
+                });
+            }
+        });
+    </script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
